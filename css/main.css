@@ -1284,7 +1284,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #cfcbb5;
+  background: #75ffee;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2768,4 +2768,43 @@ ul.breadcrumb li + li:last-child {
   .pagination {
     margin: 8px 0 0;
   }
+}
+body.darkmode-on .canvas-ribbon {
+  filter: invert(1) brightness(1.2) !important;
+}
+body.darkmode-on canvas.three-waves,
+body.darkmode-on canvas.canvas-lines,
+body.darkmode-on canvas.canvas-sphere {
+  filter: invert(1) brightness(1.3) contrast(1.1) !important;
+  mix-blend-mode: screen;
+}
+body.darkmode-on canvas.canvas-ribbon {
+  filter: invert(1) brightness(1.2) !important;
+}
+body.darkmode-on canvas[style*="position: fixed"],
+body.darkmode-on canvas[style*="position:fixed"] {
+  filter: brightness(1.2) contrast(1.1);
+  opacity: 0.8;
+}
+body.darkmode-on #three-container canvas,
+body.darkmode-on .three-canvas {
+  filter: invert(1) brightness(1.4) contrast(1.2) !important;
+  mix-blend-mode: screen;
+}
+canvas {
+  transition: filter 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+:root {
+  --animation-line-color-light: #00f;
+  --animation-line-color-dark: #fff;
+  --animation-opacity-light: 0.5;
+  --animation-opacity-dark: 0.7;
+}
+body.darkmode-on {
+  --current-animation-color: var(--animation-line-color-dark);
+  --current-animation-opacity: var(--animation-opacity-dark);
+}
+body:not(.darkmode-on) {
+  --current-animation-color: var(--animation-line-color-light);
+  --current-animation-opacity: var(--animation-opacity-light);
 }

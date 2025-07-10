@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/RayBlog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/RayBlog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/RayBlog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/RayBlog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/RayBlog/css/main.css">
+
+
+<link rel="stylesheet" href="/RayBlog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"if-else-master.github.io","root":"/RayBlog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="Deep-Simultaneous-Translation     好開心    📋 前言在國際會議場景中，講者可以自然地使用母語發言，與會者戴上耳機後將聽到保持講者原始音色的即時多語言翻譯。這種沉浸式的翻譯體驗讓聽眾下意識地感受到講者直接用目標語言在溝通，消除了傳統翻譯的疏離感。相比傳統同聲傳譯，這種技術不僅保持了講者的語調情感和個人特色，更大幅提升了跨語言溝通的效率和親和力，讓國際交流變得更">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep-Simultaneous-Translation - 即時語音克隆翻譯系統">
+<meta property="og:url" content="https://if-else-master.github.io/RayBlog/2025/05/20/Deep-Simultaneous-Translation/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="Deep-Simultaneous-Translation     好開心    📋 前言在國際會議場景中，講者可以自然地使用母語發言，與會者戴上耳機後將聽到保持講者原始音色的即時多語言翻譯。這種沉浸式的翻譯體驗讓聽眾下意識地感受到講者直接用目標語言在溝通，消除了傳統翻譯的疏離感。相比傳統同聲傳譯，這種技術不僅保持了講者的語調情感和個人特色，更大幅提升了跨語言溝通的效率和親和力，讓國際交流變得更">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://img.shields.io/badge/License-GPLv3-blue.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Python-3.10+-blue.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Status-Active-green.svg">
+<meta property="article:published_time" content="2025-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-09T16:00:00.000Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="個人專案">
+<meta property="article:tag" content="教育">
+<meta property="article:tag" content="軟體">
+<meta property="article:tag" content="國際交流">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.shields.io/badge/License-GPLv3-blue.svg">
+
+<link rel="canonical" href="https://if-else-master.github.io/RayBlog/2025/05/20/Deep-Simultaneous-Translation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Deep-Simultaneous-Translation - 即時語音克隆翻譯系統 | Ray's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/RayBlog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ray's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I am Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/RayBlog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/RayBlog/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/RayBlog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/RayBlog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+  <a href="https://github.com/yourname" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://if-else-master.github.io/RayBlog/2025/05/20/Deep-Simultaneous-Translation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/RayBlog/images/RayMe.png">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Deep-Simultaneous-Translation - 即時語音克隆翻譯系統
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2025-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2025-05-20T00:00:00+08:00">2025-05-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-07-10 00:00:00" itemprop="dateModified" datetime="2025-07-10T00:00:00+08:00">2025-07-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Deep-Simultaneous-Translation"><a href="#Deep-Simultaneous-Translation" class="headerlink" title="Deep-Simultaneous-Translation"></a>Deep-Simultaneous-Translation</h1><div style="font-size: 0.9em; color: gray;">
+    好開心
+</div>
+
+
+<h2 id="📋-前言"><a href="#📋-前言" class="headerlink" title="📋 前言"></a>📋 前言</h2><p>在國際會議場景中，講者可以自然地使用母語發言，與會者戴上耳機後將聽到保持講者原始音色的即時多語言翻譯。這種沉浸式的翻譯體驗讓聽眾下意識地感受到講者直接用目標語言在溝通，消除了傳統翻譯的疏離感。相比傳統同聲傳譯，這種技術不僅保持了講者的語調情感和個人特色，更大幅提升了跨語言溝通的效率和親和力，讓國際交流變得更加自然流暢。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/if-else-master/Deep-Simultaneous-Translation.git</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+<h1 id="即時語音克隆翻譯系統-Real-Time-Voice-Cloning-Translation-System"><a href="#即時語音克隆翻譯系統-Real-Time-Voice-Cloning-Translation-System" class="headerlink" title="即時語音克隆翻譯系統 (Real-Time Voice Cloning Translation System)"></a>即時語音克隆翻譯系統 (Real-Time Voice Cloning Translation System)</h1><p><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"><br><img src="https://img.shields.io/badge/Python-3.10+-blue.svg" alt="Python 3.10+"><br><img src="https://img.shields.io/badge/Status-Active-green.svg" alt="Status"></p>
+<p>這是一個革命性的即時語音翻譯系統，能夠<strong>邊聽邊翻譯邊輸出</strong>，並在保留說話者原始音色的情況下，將語音內容實時翻譯成多種語言。系統採用最先進的AI模型來實現語音識別、翻譯和合成的無縫整合。</p>
+<h2 id="✨-主要功能"><a href="#✨-主要功能" class="headerlink" title="✨ 主要功能"></a>✨ 主要功能</h2><ul>
+<li><strong>🎤 即時語音處理</strong>：真正的邊聽邊翻譯邊輸出，支持同時進行音頻捕獲、翻譯處理和語音播放</li>
+<li><strong>🎭 高精度音色克隆</strong>：僅需3-5秒音頻樣本即可克隆用戶音色</li>
+<li><strong>🌍 多語言支持</strong>：支持 9 種語言互譯（中文、英文、日文、韓文、西班牙文、法文、德文、意大利文、葡萄牙文）</li>
+<li><strong>🤖 斷點檢測</strong>：自動識別語音開始和停頓，無需手動控制</li>
+<li><strong>⚡ 多線程架構</strong>：音頻捕獲、翻譯處理、語音播放並行進行</li>
+<li><strong>🔒 安全性</strong>：API Key 安全輸入，臨時文件自動清理</li>
+</ul>
+<h2 id="🎯-核心特色"><a href="#🎯-核心特色" class="headerlink" title="🎯 核心特色"></a>🎯 核心特色</h2><h3 id="真正的即時翻譯"><a href="#真正的即時翻譯" class="headerlink" title="真正的即時翻譯"></a>真正的即時翻譯</h3><ul>
+<li>用戶說話時系統同時進行音頻捕獲</li>
+<li>檢測到語音停頓（1秒）後立即開始翻譯處理</li>
+<li>翻譯完成後使用用戶克隆的語音立即播放</li>
+<li>用戶可以在系統播放翻譯的同時繼續說話</li>
+</ul>
+<h3 id="智能語音活動檢測"><a href="#智能語音活動檢測" class="headerlink" title="智能語音活動檢測"></a>智能語音活動檢測</h3><ul>
+<li>自動檢測語音開始和結束</li>
+<li>最小語音長度過濾（0.3秒）避免雜音干擾</li>
+<li>可調節的靜音閾值和持續時間</li>
+</ul>
+<h2 id="🏗️-技術架構"><a href="#🏗️-技術架構" class="headerlink" title="🏗️ 技術架構"></a>🏗️ 技術架構</h2><p>本專案結合了多個先進的AI模型和技術：</p>
+<h3 id="1-XTTS-v2-Coqui-TTS"><a href="#1-XTTS-v2-Coqui-TTS" class="headerlink" title="1. XTTS-v2 (Coqui TTS)"></a>1. <strong>XTTS-v2 (Coqui TTS)</strong></h3><ul>
+<li>用於語音合成和音色克隆</li>
+<li>支持多語言語音合成（包括日語、韓語等）</li>
+<li>僅需短音頻樣本即可克隆音色</li>
+</ul>
+<h3 id="2-Gemini-2-0-Flash-API"><a href="#2-Gemini-2-0-Flash-API" class="headerlink" title="2. Gemini 2.0 Flash API"></a>2. <strong>Gemini 2.0 Flash API</strong></h3><ul>
+<li>用於語音識別和翻譯</li>
+<li>支持多模態輸入（音頻 + 文本）</li>
+<li>高精度的語音轉文字和翻譯</li>
+</ul>
+<h3 id="3-MeCab-unidic-lite"><a href="#3-MeCab-unidic-lite" class="headerlink" title="3. MeCab + unidic-lite"></a>3. <strong>MeCab + unidic-lite</strong></h3><ul>
+<li>日語文本分析和處理</li>
+<li>支持高質量的日語語音合成</li>
+<li>自動配置和錯誤處理</li>
+<li>start.sh 檢查 MeCab 檢測</li>
+</ul>
+<h2 id="💻-系統要求"><a href="#💻-系統要求" class="headerlink" title="💻 系統要求"></a>💻 系統要求</h2><ul>
+<li><strong>作業系統</strong>：macOS (推薦 M4 Pro)、Linux</li>
+<li><strong>Python</strong>：3.10</li>
+<li><strong>記憶體</strong>：至少 8GB RAM</li>
+<li><strong>硬碟空間</strong>：至少 5GB（用於模型存儲）</li>
+<li><strong>網絡</strong>：穩定的網絡連接（用於 API 請求）</li>
+<li><strong>音頻設備</strong>：麥克風和揚聲器</li>
+</ul>
+<h2 id="🚀-快速安裝"><a href="#🚀-快速安裝" class="headerlink" title="🚀 快速安裝"></a>🚀 快速安裝</h2><h3 id="1-克隆專案"><a href="#1-克隆專案" class="headerlink" title="1. 克隆專案"></a>1. 克隆專案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/yourusername/Deep-Simultaneous-Translation.git</span><br><span class="line"><span class="built_in">cd</span> Deep-Simultaneous-Translation</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-創建虛擬環境"><a href="#2-創建虛擬環境" class="headerlink" title="2. 創建虛擬環境"></a>2. 創建虛擬環境</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -m venv .venv</span><br><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安裝依賴項"><a href="#3-安裝依賴項" class="headerlink" title="3. 安裝依賴項"></a>3. 安裝依賴項</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-macOS-用戶額外設置（日語支持）"><a href="#4-macOS-用戶額外設置（日語支持）" class="headerlink" title="4. macOS 用戶額外設置（日語支持）"></a>4. macOS 用戶額外設置（日語支持）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mecab mecab-ipadic</span><br></pre></td></tr></table></figure>
+
+<h2 id="📋-依賴項清單"><a href="#📋-依賴項清單" class="headerlink" title="📋 依賴項清單"></a>📋 依賴項清單</h2><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sounddevice</span><br><span class="line">numpy</span><br><span class="line">TTS==0.22.0</span><br><span class="line">openai-whisper</span><br><span class="line">google-generativeai</span><br><span class="line">torch==2.1</span><br><span class="line">pyaudio</span><br><span class="line">pygame</span><br><span class="line">cutlet</span><br><span class="line">fugashi              # 日語文本處理庫</span><br><span class="line">unidic-lite         # 日語詞典，支援 XTTS 日語語音合成</span><br></pre></td></tr></table></figure>
+
+<h2 id="🎯-使用方法"><a href="#🎯-使用方法" class="headerlink" title="🎯 使用方法"></a>🎯 使用方法</h2><h3 id="啟動系統"><a href="#啟動系統" class="headerlink" title="啟動系統"></a>啟動系統</h3><p><strong>方法一：使用啟動腳本（推薦）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x start.sh</span><br><span class="line">./start.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：直接運行</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h3><ol>
+<li><p><strong>📡 設置 Gemini API Key</strong></p>
+<ul>
+<li>系統會提示您安全輸入 API Key</li>
+<li>從 <a target="_blank" rel="noopener" href="https://makersuite.google.com/app/apikey">Google AI Studio</a> 獲取</li>
+</ul>
+</li>
+<li><p><strong>🌍 選擇語言</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">支持的語言:</span><br><span class="line">zh: 中文    en: 英文    ja: 日文</span><br><span class="line">ko: 韓文    es: 西班牙文  fr: 法文</span><br><span class="line">de: 德文    it: 意大利文  pt: 葡萄牙文</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>🎭 克隆語音（按 c）</strong></p>
+<ul>
+<li>用自然語調說一段話（3-5秒）</li>
+<li>系統會自動檢測語音開始和結束</li>
+<li>語音樣本將保存在 <code>cloned_voices/</code> 目錄</li>
+</ul>
+</li>
+<li><p><strong>⚡ 開始即時翻譯（按 Enter）</strong></p>
+<ul>
+<li>系統進入持續監聽模式</li>
+<li>開始說話，停頓1秒後自動翻譯</li>
+<li>使用您的克隆語音即時播放翻譯結果</li>
+</ul>
+</li>
+</ol>
+<h2 id="🎛️-操作界面"><a href="#🎛️-操作界面" class="headerlink" title="🎛️ 操作界面"></a>🎛️ 操作界面</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">📋 操作選項:</span><br><span class="line">  c - 克隆語音（必須先完成）</span><br><span class="line">  enter - 開始即時翻譯</span><br><span class="line">  q - 退出程序</span><br><span class="line"></span><br><span class="line">✅ 語音已克隆，可以開始即時翻譯</span><br></pre></td></tr></table></figure>
+
+<h2 id="🔧-核心代碼架構"><a href="#🔧-核心代碼架構" class="headerlink" title="🔧 核心代碼架構"></a>🔧 核心代碼架構</h2><h3 id="多線程即時處理"><a href="#多線程即時處理" class="headerlink" title="多線程即時處理"></a>多線程即時處理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 三個並行工作線程</span></span><br><span class="line"><span class="number">1.</span> audio_capture_worker()    <span class="comment"># 音頻捕獲線程</span></span><br><span class="line"><span class="number">2.</span> translation_worker()      <span class="comment"># 翻譯處理線程  </span></span><br><span class="line"><span class="number">3.</span> playback_worker()         <span class="comment"># 音頻播放線程</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🎙️-聲音斷點檢測技術"><a href="#🎙️-聲音斷點檢測技術" class="headerlink" title="🎙️ 聲音斷點檢測技術"></a>🎙️ 聲音斷點檢測技術</h2><p>本系統採用了先進的<strong>語音活動檢測 (Voice Activity Detection, VAD)</strong> 算法來實現自動斷點識別和翻譯觸發。</p>
+<h3 id="核心技術原理"><a href="#核心技術原理" class="headerlink" title="核心技術原理"></a>核心技術原理</h3><h4 id="1-RMS-Root-Mean-Square-音量計算"><a href="#1-RMS-Root-Mean-Square-音量計算" class="headerlink" title="1. RMS (Root Mean Square) 音量計算"></a>1. RMS (Root Mean Square) 音量計算</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">calculate_rms</span>(<span class="params">self, audio_data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;計算音頻RMS值 - 音量強度的數學表示&quot;&quot;&quot;</span></span><br><span class="line">    audio_np = np.frombuffer(audio_data, dtype=np.int16)</span><br><span class="line">    mean_square = np.mean(audio_np.astype(np.float64)**<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> np.sqrt(mean_square)</span><br></pre></td></tr></table></figure>
+
+<p><strong>數學公式：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMS = √(∑(xi²)/N)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>xi：每個音頻樣本的振幅值</li>
+<li>N：樣本總數</li>
+<li>RMS值反映音頻信號的能量強度</li>
+</ul>
+<h4 id="2-語音活動檢測算法"><a href="#2-語音活動檢測算法" class="headerlink" title="2. 語音活動檢測算法"></a>2. 語音活動檢測算法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detect_voice_activity</span>(<span class="params">self, audio_data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;智能語音斷點檢測&quot;&quot;&quot;</span></span><br><span class="line">    rms = <span class="variable language_">self</span>.calculate_rms(audio_data)</span><br><span class="line">    current_time = time.time()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> rms &gt; <span class="variable language_">self</span>.silence_threshold:  <span class="comment"># 檢測到語音</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.is_speech_detected:</span><br><span class="line">            <span class="variable language_">self</span>.is_speech_detected = <span class="literal">True</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;🎤 開始說話...&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.last_speech_time = current_time</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:  <span class="comment"># 靜音狀態</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.is_speech_detected:</span><br><span class="line">            silence_duration = current_time - <span class="variable language_">self</span>.last_speech_time</span><br><span class="line">            <span class="keyword">if</span> silence_duration &gt;= <span class="variable language_">self</span>.silence_duration:</span><br><span class="line">                <span class="variable language_">self</span>.is_speech_detected = <span class="literal">False</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;⏸️ 檢測到停頓，處理語音...&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.is_speech_detected</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-關鍵參數配置"><a href="#3-關鍵參數配置" class="headerlink" title="3. 關鍵參數配置"></a>3. 關鍵參數配置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 音頻參數</span></span><br><span class="line"><span class="variable language_">self</span>.chunk = <span class="number">1024</span>              <span class="comment"># 音頻塊大小 (樣本數)</span></span><br><span class="line"><span class="variable language_">self</span>.rate = <span class="number">16000</span>              <span class="comment"># 採樣率 16kHz</span></span><br><span class="line"><span class="variable language_">self</span>.silence_threshold = <span class="number">500</span>   <span class="comment"># 靜音閾值 (RMS值)</span></span><br><span class="line"><span class="variable language_">self</span>.silence_duration = <span class="number">1.0</span>    <span class="comment"># 靜音持續時間 (秒)</span></span><br><span class="line"><span class="variable language_">self</span>.min_speech_duration = <span class="number">0.3</span> <span class="comment"># 最短語音長度 (秒)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="技術實現細節"><a href="#技術實現細節" class="headerlink" title="技術實現細節"></a>技術實現細節</h3><h4 id="1-音頻緩衝機制"><a href="#1-音頻緩衝機制" class="headerlink" title="1. 音頻緩衝機制"></a>1. 音頻緩衝機制</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="variable language_">self</span>.audio_buffer = deque(maxlen=<span class="built_in">int</span>(<span class="variable language_">self</span>.rate * <span class="number">10</span>))  <span class="comment"># 10秒環形緩衝</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 <strong>deque</strong> 數據結構實現環形緩衝區</li>
+<li>最大容量：10秒音頻數據</li>
+<li>自動覆蓋舊數據，避免記憶體溢出</li>
+</ul>
+<h4 id="2-實時語音分段"><a href="#2-實時語音分段" class="headerlink" title="2. 實時語音分段"></a>2. 實時語音分段</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">audio_capture_worker</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;音頻捕獲與分段處理&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="variable language_">self</span>.is_real_time_active:</span><br><span class="line">        data = stream.read(<span class="variable language_">self</span>.chunk)</span><br><span class="line">        <span class="variable language_">self</span>.audio_buffer.extend(np.frombuffer(data, dtype=np.int16))</span><br><span class="line">        </span><br><span class="line">        is_speech = <span class="variable language_">self</span>.detect_voice_activity(data)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> is_speech:</span><br><span class="line">            <span class="comment"># 累積語音段</span></span><br><span class="line">            <span class="variable language_">self</span>.current_segment.extend(np.frombuffer(data, dtype=np.int16))</span><br><span class="line">        <span class="keyword">elif</span> <span class="variable language_">self</span>.current_segment <span class="keyword">and</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.current_segment) &gt; <span class="built_in">int</span>(<span class="variable language_">self</span>.rate * <span class="variable language_">self</span>.min_speech_duration):</span><br><span class="line">            <span class="comment"># 語音段結束，發送處理</span></span><br><span class="line">            segment_audio = np.array(<span class="variable language_">self</span>.current_segment, dtype=np.int16)</span><br><span class="line">            <span class="variable language_">self</span>.audio_segments_queue.put(segment_audio)</span><br><span class="line">            <span class="variable language_">self</span>.current_segment = []</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-斷點檢測流程圖"><a href="#3-斷點檢測流程圖" class="headerlink" title="3. 斷點檢測流程圖"></a>3. 斷點檢測流程圖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">音頻輸入 → RMS計算 → 閾值比較 → 狀態判斷 → 動作觸發</span><br><span class="line">   ↓           ↓         ↓         ↓         ↓</span><br><span class="line">16kHz      數學運算    &gt;500?    語音/靜音    翻譯/等待</span><br><span class="line">採樣率      √(∑x²/N)   判斷     狀態機     處理</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用的函式庫"><a href="#使用的函式庫" class="headerlink" title="使用的函式庫"></a>使用的函式庫</h3><h4 id="音頻處理"><a href="#音頻處理" class="headerlink" title="音頻處理"></a>音頻處理</h4><ul>
+<li><strong>PyAudio</strong>：音頻設備介面，實時音頻捕獲</li>
+<li><strong>NumPy</strong>：高效數值計算，音頻數據處理</li>
+<li><strong>SciPy</strong>：音頻文件讀寫，格式轉換</li>
+</ul>
+<h4 id="數據結構"><a href="#數據結構" class="headerlink" title="數據結構"></a>數據結構</h4><ul>
+<li><strong>collections.deque</strong>：環形緩衝區實現</li>
+<li><strong>queue.Queue</strong>：線程間通信</li>
+<li><strong>threading</strong>：多線程並行處理</li>
+</ul>
+<h4 id="數學運算"><a href="#數學運算" class="headerlink" title="數學運算"></a>數學運算</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># RMS計算</span></span><br><span class="line">rms = np.sqrt(np.mean(audio_array**<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 音頻數據轉換</span></span><br><span class="line">audio_np = np.frombuffer(raw_audio, dtype=np.int16)</span><br></pre></td></tr></table></figure>
+
+<h3 id="智能優化特性"><a href="#智能優化特性" class="headerlink" title="智能優化特性"></a>智能優化特性</h3><h4 id="1-防雜音干擾"><a href="#1-防雜音干擾" class="headerlink" title="1. 防雜音干擾"></a>1. 防雜音干擾</h4><ul>
+<li><strong>最小語音長度過濾</strong>：僅處理超過0.3秒的語音段</li>
+<li><strong>RMS閾值調節</strong>：動態適應環境噪音</li>
+<li><strong>連續性檢測</strong>：避免短暫雜音觸發翻譯</li>
+</ul>
+<h4 id="2-響應速度優化"><a href="#2-響應速度優化" class="headerlink" title="2. 響應速度優化"></a>2. 響應速度優化</h4><ul>
+<li><strong>1秒停頓檢測</strong>：平衡響應速度與準確性</li>
+<li><strong>實時處理</strong>：邊錄音邊分析，無需等待完整句子</li>
+<li><strong>並行架構</strong>：音頻捕獲與翻譯處理同時進行</li>
+</ul>
+<h4 id="3-記憶體管理"><a href="#3-記憶體管理" class="headerlink" title="3. 記憶體管理"></a>3. 記憶體管理</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 環形緩衝區，固定記憶體使用</span></span><br><span class="line">deque(maxlen=<span class="number">160000</span>)  <span class="comment"># 約10秒@16kHz</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 臨時文件自動清理</span></span><br><span class="line">tempfile.NamedTemporaryFile(delete=<span class="literal">False</span>)</span><br><span class="line">os.unlink(temp_file.name)</span><br></pre></td></tr></table></figure>
+
+<h3 id="語音斷點檢測演算法的優勢"><a href="#語音斷點檢測演算法的優勢" class="headerlink" title="語音斷點檢測演算法的優勢"></a>語音斷點檢測演算法的優勢</h3><ol>
+<li><strong>低延遲</strong>：1秒停頓即觸發，快速響應</li>
+<li><strong>高準確性</strong>：RMS + 時間窗口雙重檢測</li>
+<li><strong>抗噪音</strong>：智能閾值與最小長度過濾</li>
+<li><strong>資源效率</strong>：環形緩衝區，控制記憶體使用</li>
+<li><strong>實時性</strong>：無需預先錄製完整音頻</li>
+</ol>
+<h3 id="智能語音檢測"><a href="#智能語音檢測" class="headerlink" title="智能語音檢測"></a>智能語音檢測</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detect_voice_activity</span>(<span class="params">self, audio_data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;語音活動檢測&quot;&quot;&quot;</span></span><br><span class="line">    rms = <span class="variable language_">self</span>.calculate_rms(audio_data)</span><br><span class="line">    <span class="comment"># 音量閾值檢測 + 時間窗口分析</span></span><br><span class="line">    <span class="comment"># 自動識別說話開始和停頓</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="多語言語音合成"><a href="#多語言語音合成" class="headerlink" title="多語言語音合成"></a>多語言語音合成</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">synthesize_speech</span>(<span class="params">self, text</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;使用克隆語音合成多語言語音&quot;&quot;&quot;</span></span><br><span class="line">    language_map = &#123;</span><br><span class="line">        <span class="string">&#x27;zh&#x27;</span>: <span class="string">&#x27;zh-cn&#x27;</span>, <span class="string">&#x27;en&#x27;</span>: <span class="string">&#x27;en&#x27;</span>, <span class="string">&#x27;ja&#x27;</span>: <span class="string">&#x27;ja&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;ko&#x27;</span>: <span class="string">&#x27;ko&#x27;</span>, <span class="string">&#x27;es&#x27;</span>: <span class="string">&#x27;es&#x27;</span>, <span class="string">&#x27;fr&#x27;</span>: <span class="string">&#x27;fr&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;de&#x27;</span>: <span class="string">&#x27;de&#x27;</span>, <span class="string">&#x27;it&#x27;</span>: <span class="string">&#x27;it&#x27;</span>, <span class="string">&#x27;pt&#x27;</span>: <span class="string">&#x27;pt&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 自動語言檢測 + 錯誤處理</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🛠️-高級功能"><a href="#🛠️-高級功能" class="headerlink" title="🛠️ 高級功能"></a>🛠️ 高級功能</h2><h3 id="自動-MeCab-配置"><a href="#自動-MeCab-配置" class="headerlink" title="自動 MeCab 配置"></a>自動 MeCab 配置</h3><p>系統會自動檢測並配置 MeCab（日語處理）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">setup_mecab</span>():</span><br><span class="line">    <span class="comment"># 自動檢測 unidic-lite 詞典</span></span><br><span class="line">    <span class="comment"># 備用系統 MeCab 配置</span></span><br><span class="line">    <span class="comment"># 智能錯誤處理</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="智能錯誤恢復"><a href="#智能錯誤恢復" class="headerlink" title="智能錯誤恢復"></a>智能錯誤恢復</h3><ul>
+<li>日語處理失敗時自動使用英語合成</li>
+<li>API 錯誤重試機制</li>
+<li>臨時文件自動清理</li>
+</ul>
+<h2 id="🎵-支持的語言組合"><a href="#🎵-支持的語言組合" class="headerlink" title="🎵 支持的語言組合"></a>🎵 支持的語言組合</h2><table>
+<thead>
+<tr>
+<th>原始語言</th>
+<th>目標語言</th>
+<th>狀態</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文</td>
+<td>日文</td>
+<td>✅ 完全支持</td>
+</tr>
+<tr>
+<td>中文</td>
+<td>英文</td>
+<td>✅ 完全支持</td>
+</tr>
+<tr>
+<td>英文</td>
+<td>中文</td>
+<td>✅ 完全支持</td>
+</tr>
+<tr>
+<td>英文</td>
+<td>日文</td>
+<td>✅ 完全支持</td>
+</tr>
+<tr>
+<td>其他語言</td>
+<td>任意支持語言</td>
+<td>✅ 完全支持</td>
+</tr>
+</tbody></table>
+<h2 id="🔍-故障排除"><a href="#🔍-故障排除" class="headerlink" title="🔍 故障排除"></a>🔍 故障排除</h2><h3 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h3><p><strong>1. MeCab 初始化錯誤</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解決方案：系統已自動處理，會使用 unidic-lite 備用詞典</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 語音合成失敗</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⚠️ 日語處理組件問題，嘗試使用英語合成...</span><br><span class="line">🔊 使用英語語音合成完成</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. API Key 無效</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❌ API Key 無效: 400 API key not valid</span><br><span class="line">是否重新輸入？(y/n): y</span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 音頻設備問題</strong></p>
+<ul>
+<li>檢查麥克風權限</li>
+<li>確認音頻設備工作正常</li>
+<li>在安靜環境中使用</li>
+</ul>
+<h3 id="性能優化"><a href="#性能優化" class="headerlink" title="性能優化"></a>性能優化</h3><p><strong>記憶體優化</strong></p>
+<ul>
+<li>臨時文件自動清理</li>
+<li>音頻緩衝區大小限制</li>
+<li>佇列管理</li>
+</ul>
+<h2 id="📁-專案結構"><a href="#📁-專案結構" class="headerlink" title="📁 專案結構"></a>📁 專案結構</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Deep-Simultaneous-Translation/</span><br><span class="line">├── main.py              # 主程序</span><br><span class="line">├── start.sh             # 啟動腳本</span><br><span class="line">├── requirements.txt     # 依賴項</span><br><span class="line">├── README.md           # 使用說明</span><br><span class="line">├── XTTS-v2/            # XTTS 模型文件</span><br><span class="line">│   ├── config.json</span><br><span class="line">│   ├── model.pth</span><br><span class="line">│   └── ...</span><br><span class="line">├── cloned_voices/      # 克隆語音存儲</span><br><span class="line">└── voice_output/       # 音頻輸出（臨時）</span><br></pre></td></tr></table></figure>
+
+<h2 id="🔐-安全與隱私"><a href="#🔐-安全與隱私" class="headerlink" title="🔐 安全與隱私"></a>🔐 安全與隱私</h2><ul>
+<li><strong>API Key 安全輸入</strong>：使用 <code>getpass</code> 避免明文顯示</li>
+<li><strong>本地音頻處理</strong>：語音克隆完全在本地進行</li>
+<li><strong>臨時文件清理</strong>：自動清理所有臨時音頻文件</li>
+<li><strong>網絡隱私</strong>：僅翻譯時向 Gemini API 發送音頻</li>
+</ul>
+<h2 id="🤝-貢獻指南"><a href="#🤝-貢獻指南" class="headerlink" title="🤝 貢獻指南"></a>🤝 貢獻指南</h2><p>歡迎提交 Issue 和 Pull Request！</p>
+<ol>
+<li>Fork 本專案</li>
+<li>創建功能分支 (<code>git checkout -b feature/AmazingFeature</code>)</li>
+<li>提交更改 (<code>git commit -m &#39;Add some AmazingFeature&#39;</code>)</li>
+<li>推送到分支 (<code>git push origin feature/AmazingFeature</code>)</li>
+<li>開啟 Pull Request</li>
+</ol>
+<h2 id="📜-授權信息"><a href="#📜-授權信息" class="headerlink" title="📜 授權信息"></a>📜 授權信息</h2><ul>
+<li><strong>本專案</strong>：GNU GENERAL PUBLIC LICENSE</li>
+<li><strong>XTTS-v2 模型</strong>：<a target="_blank" rel="noopener" href="https://huggingface.co/coqui/XTTS-v2">Coqui Public Model License</a></li>
+<li><strong>Gemini API</strong>：遵循 Google AI 使用條款</li>
+</ul>
+<h2 id="📞-聯繫方式"><a href="#📞-聯繫方式" class="headerlink" title="📞 聯繫方式"></a>📞 聯繫方式</h2><ul>
+<li><strong>Email</strong>：[<a href="mailto:&#x72;&#x61;&#121;&#99;&#53;&#x37;&#x34;&#50;&#x39;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">rayc57429@gmail.com</a>]</li>
+<li><strong>GitHub Issues</strong>：<a target="_blank" rel="noopener" href="https://github.com/yourusername/Deep-Simultaneous-Translation/issues">提交問題</a></li>
+</ul>
+<h2 id="🙏-致謝"><a href="#🙏-致謝" class="headerlink" title="🙏 致謝"></a>🙏 致謝</h2><p>感謝以下開源專案：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/coqui-ai/TTS">Coqui TTS</a> - XTTS-v2 語音合成</li>
+<li><a target="_blank" rel="noopener" href="https://ai.google.dev/">Google Gemini</a> - 語音識別和翻譯</li>
+<li><a target="_blank" rel="noopener" href="https://taku910.github.io/mecab/">MeCab</a> - 日語文本分析</li>
+</ul>
+<hr>
+<div align="center">
+
+<p><strong>🎤 即時語音克隆翻譯系統 | Deep-Simultaneous-Translation</strong></p>
+<p><em>讓語言不再是溝通的障礙</em></p>
+<p>© 2025 Deep Simultaneous Translation</p>
+</div>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/RayBlog/tags/AI/" rel="tag"># AI</a>
+              <a href="/RayBlog/tags/%E5%80%8B%E4%BA%BA%E5%B0%88%E6%A1%88/" rel="tag"># 個人專案</a>
+              <a href="/RayBlog/tags/%E6%95%99%E8%82%B2/" rel="tag"># 教育</a>
+              <a href="/RayBlog/tags/%E8%BB%9F%E9%AB%94/" rel="tag"># 軟體</a>
+              <a href="/RayBlog/tags/%E5%9C%8B%E9%9A%9B%E4%BA%A4%E6%B5%81/" rel="tag"># 國際交流</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/RayBlog/2025/05/05/2025IEYI%E4%B8%96%E7%95%8C%E9%9D%92%E5%B0%91%E5%B9%B4%E7%99%BC%E6%98%8E%E5%B1%95/" rel="prev" title="2025 IEYI 世界青少年發明展：臺灣選拔賽">
+      <i class="fa fa-chevron-left"></i> 2025 IEYI 世界青少年發明展：臺灣選拔賽
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RayBlog/2025/06/07/title/" rel="next" title="個人專案分享及比賽心得記錄">
+      個人專案分享及比賽心得記錄 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Deep-Simultaneous-Translation"><span class="nav-number">1.</span> <span class="nav-text">Deep-Simultaneous-Translation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">📋 前言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B3%E6%99%82%E8%AA%9E%E9%9F%B3%E5%85%8B%E9%9A%86%E7%BF%BB%E8%AD%AF%E7%B3%BB%E7%B5%B1-Real-Time-Voice-Cloning-Translation-System"><span class="nav-number">2.</span> <span class="nav-text">即時語音克隆翻譯系統 (Real-Time Voice Cloning Translation System)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%A8-%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">✨ 主要功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E6%A0%B8%E5%BF%83%E7%89%B9%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text">🎯 核心特色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%8D%B3%E6%99%82%E7%BF%BB%E8%AD%AF"><span class="nav-number">2.2.1.</span> <span class="nav-text">真正的即時翻譯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E8%AA%9E%E9%9F%B3%E6%B4%BB%E5%8B%95%E6%AA%A2%E6%B8%AC"><span class="nav-number">2.2.2.</span> <span class="nav-text">智能語音活動檢測</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8F%97%EF%B8%8F-%E6%8A%80%E8%A1%93%E6%9E%B6%E6%A7%8B"><span class="nav-number">2.3.</span> <span class="nav-text">🏗️ 技術架構</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-XTTS-v2-Coqui-TTS"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. XTTS-v2 (Coqui TTS)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Gemini-2-0-Flash-API"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. Gemini 2.0 Flash API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MeCab-unidic-lite"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. MeCab + unidic-lite</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%BB-%E7%B3%BB%E7%B5%B1%E8%A6%81%E6%B1%82"><span class="nav-number">2.4.</span> <span class="nav-text">💻 系統要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9A%80-%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D"><span class="nav-number">2.5.</span> <span class="nav-text">🚀 快速安裝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%85%8B%E9%9A%86%E5%B0%88%E6%A1%88"><span class="nav-number">2.5.1.</span> <span class="nav-text">1. 克隆專案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%89%B5%E5%BB%BA%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83"><span class="nav-number">2.5.2.</span> <span class="nav-text">2. 創建虛擬環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%89%E8%A3%9D%E4%BE%9D%E8%B3%B4%E9%A0%85"><span class="nav-number">2.5.3.</span> <span class="nav-text">3. 安裝依賴項</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-macOS-%E7%94%A8%E6%88%B6%E9%A1%8D%E5%A4%96%E8%A8%AD%E7%BD%AE%EF%BC%88%E6%97%A5%E8%AA%9E%E6%94%AF%E6%8C%81%EF%BC%89"><span class="nav-number">2.5.4.</span> <span class="nav-text">4. macOS 用戶額外設置（日語支持）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E4%BE%9D%E8%B3%B4%E9%A0%85%E6%B8%85%E5%96%AE"><span class="nav-number">2.6.</span> <span class="nav-text">📋 依賴項清單</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.7.</span> <span class="nav-text">🎯 使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%9F%E5%8B%95%E7%B3%BB%E7%B5%B1"><span class="nav-number">2.7.1.</span> <span class="nav-text">啟動系統</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.7.2.</span> <span class="nav-text">操作流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%9B%EF%B8%8F-%E6%93%8D%E4%BD%9C%E7%95%8C%E9%9D%A2"><span class="nav-number">2.8.</span> <span class="nav-text">🎛️ 操作界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A7-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A2%BC%E6%9E%B6%E6%A7%8B"><span class="nav-number">2.9.</span> <span class="nav-text">🔧 核心代碼架構</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%B7%9A%E7%A8%8B%E5%8D%B3%E6%99%82%E8%99%95%E7%90%86"><span class="nav-number">2.9.1.</span> <span class="nav-text">多線程即時處理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%99%EF%B8%8F-%E8%81%B2%E9%9F%B3%E6%96%B7%E9%BB%9E%E6%AA%A2%E6%B8%AC%E6%8A%80%E8%A1%93"><span class="nav-number">2.10.</span> <span class="nav-text">🎙️ 聲音斷點檢測技術</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%8A%80%E8%A1%93%E5%8E%9F%E7%90%86"><span class="nav-number">2.10.1.</span> <span class="nav-text">核心技術原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-RMS-Root-Mean-Square-%E9%9F%B3%E9%87%8F%E8%A8%88%E7%AE%97"><span class="nav-number">2.10.1.1.</span> <span class="nav-text">1. RMS (Root Mean Square) 音量計算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AA%9E%E9%9F%B3%E6%B4%BB%E5%8B%95%E6%AA%A2%E6%B8%AC%E7%AE%97%E6%B3%95"><span class="nav-number">2.10.1.2.</span> <span class="nav-text">2. 語音活動檢測算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%97%9C%E9%8D%B5%E5%8F%83%E6%95%B8%E9%85%8D%E7%BD%AE"><span class="nav-number">2.10.1.3.</span> <span class="nav-text">3. 關鍵參數配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E8%A1%93%E5%AF%A6%E7%8F%BE%E7%B4%B0%E7%AF%80"><span class="nav-number">2.10.2.</span> <span class="nav-text">技術實現細節</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%9F%B3%E9%A0%BB%E7%B7%A9%E8%A1%9D%E6%A9%9F%E5%88%B6"><span class="nav-number">2.10.2.1.</span> <span class="nav-text">1. 音頻緩衝機制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AF%A6%E6%99%82%E8%AA%9E%E9%9F%B3%E5%88%86%E6%AE%B5"><span class="nav-number">2.10.2.2.</span> <span class="nav-text">2. 實時語音分段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%96%B7%E9%BB%9E%E6%AA%A2%E6%B8%AC%E6%B5%81%E7%A8%8B%E5%9C%96"><span class="nav-number">2.10.2.3.</span> <span class="nav-text">3. 斷點檢測流程圖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9A%84%E5%87%BD%E5%BC%8F%E5%BA%AB"><span class="nav-number">2.10.3.</span> <span class="nav-text">使用的函式庫</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9F%B3%E9%A0%BB%E8%99%95%E7%90%86"><span class="nav-number">2.10.3.1.</span> <span class="nav-text">音頻處理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B8%E6%93%9A%E7%B5%90%E6%A7%8B"><span class="nav-number">2.10.3.2.</span> <span class="nav-text">數據結構</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B8%E5%AD%B8%E9%81%8B%E7%AE%97"><span class="nav-number">2.10.3.3.</span> <span class="nav-text">數學運算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E5%84%AA%E5%8C%96%E7%89%B9%E6%80%A7"><span class="nav-number">2.10.4.</span> <span class="nav-text">智能優化特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%98%B2%E9%9B%9C%E9%9F%B3%E5%B9%B2%E6%93%BE"><span class="nav-number">2.10.4.1.</span> <span class="nav-text">1. 防雜音干擾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%9F%BF%E6%87%89%E9%80%9F%E5%BA%A6%E5%84%AA%E5%8C%96"><span class="nav-number">2.10.4.2.</span> <span class="nav-text">2. 響應速度優化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%A8%98%E6%86%B6%E9%AB%94%E7%AE%A1%E7%90%86"><span class="nav-number">2.10.4.3.</span> <span class="nav-text">3. 記憶體管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%9E%E9%9F%B3%E6%96%B7%E9%BB%9E%E6%AA%A2%E6%B8%AC%E6%BC%94%E7%AE%97%E6%B3%95%E7%9A%84%E5%84%AA%E5%8B%A2"><span class="nav-number">2.10.5.</span> <span class="nav-text">語音斷點檢測演算法的優勢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E8%AA%9E%E9%9F%B3%E6%AA%A2%E6%B8%AC"><span class="nav-number">2.10.6.</span> <span class="nav-text">智能語音檢測</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%AA%9E%E8%A8%80%E8%AA%9E%E9%9F%B3%E5%90%88%E6%88%90"><span class="nav-number">2.10.7.</span> <span class="nav-text">多語言語音合成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E9%AB%98%E7%B4%9A%E5%8A%9F%E8%83%BD"><span class="nav-number">2.11.</span> <span class="nav-text">🛠️ 高級功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8B%95-MeCab-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.11.1.</span> <span class="nav-text">自動 MeCab 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E9%8C%AF%E8%AA%A4%E6%81%A2%E5%BE%A9"><span class="nav-number">2.11.2.</span> <span class="nav-text">智能錯誤恢復</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%B5-%E6%94%AF%E6%8C%81%E7%9A%84%E8%AA%9E%E8%A8%80%E7%B5%84%E5%90%88"><span class="nav-number">2.12.</span> <span class="nav-text">🎵 支持的語言組合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="nav-number">2.13.</span> <span class="nav-text">🔍 故障排除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E5%95%8F%E9%A1%8C"><span class="nav-number">2.13.1.</span> <span class="nav-text">常見問題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%84%AA%E5%8C%96"><span class="nav-number">2.13.2.</span> <span class="nav-text">性能優化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%81-%E5%B0%88%E6%A1%88%E7%B5%90%E6%A7%8B"><span class="nav-number">2.14.</span> <span class="nav-text">📁 專案結構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%90-%E5%AE%89%E5%85%A8%E8%88%87%E9%9A%B1%E7%A7%81"><span class="nav-number">2.15.</span> <span class="nav-text">🔐 安全與隱私</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A4%9D-%E8%B2%A2%E7%8D%BB%E6%8C%87%E5%8D%97"><span class="nav-number">2.16.</span> <span class="nav-text">🤝 貢獻指南</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9C-%E6%8E%88%E6%AC%8A%E4%BF%A1%E6%81%AF"><span class="nav-number">2.17.</span> <span class="nav-text">📜 授權信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9E-%E8%81%AF%E7%B9%AB%E6%96%B9%E5%BC%8F"><span class="nav-number">2.18.</span> <span class="nav-text">📞 聯繫方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%99%8F-%E8%87%B4%E8%AC%9D"><span class="nav-number">2.19.</span> <span class="nav-text">🙏 致謝</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/RayBlog/images/RayMe.png">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/RayBlog/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/RayBlog/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/if-else-master" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;if-else-master" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/RayBlog/rayc57429@gmail.com" title="E-Mail → rayc57429@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rayc57429/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rayc57429&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div><script>
+// 動態 Canvas Nest 動畫，支持深色模式切換
+(function() {
+  // 檢測當前主題模式
+  function getCurrentTheme() {
+    return document.body.classList.contains('darkmode-on') ? 'dark' : 'light';
+  }
+  
+  // 根據主題設定顏色
+  function getCanvasColor() {
+    return getCurrentTheme() === 'dark' ? '255,255,255' : '0,0,255';
+  }
+  
+  // 載入 Canvas Nest
+  function loadCanvasNest() {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js';
+    script.setAttribute('color', getCanvasColor());
+    script.setAttribute('opacity', '0.5');
+    script.setAttribute('zIndex', '-1');
+    script.setAttribute('count', '99');
+    document.head.appendChild(script);
+  }
+  
+  // 監聽深色模式切換
+  function observeThemeChange() {
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          // 當檢測到深色模式切換時，重新載入動畫
+          const canvases = document.querySelectorAll('canvas');
+          canvases.forEach(canvas => {
+            if (canvas.style.position === 'fixed') {
+              canvas.remove();
+            }
+          });
+          
+          // 延遲重新載入以確保平滑過渡
+          setTimeout(() => {
+            loadCanvasNest();
+          }, 300);
+        }
+      });
+    });
+    
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+  
+  // 初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCanvasNest();
+      observeThemeChange();
+    });
+  } else {
+    loadCanvasNest();
+    observeThemeChange();
+  }
+})();
+</script> 
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/RayBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/RayBlog/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/RayBlog/lib/anime.min.js"></script>
+  <script src="/RayBlog/lib/velocity/velocity.min.js"></script>
+  <script src="/RayBlog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/RayBlog/js/utils.js"></script>
+
+<script src="/RayBlog/js/motion.js"></script>
+
+
+<script src="/RayBlog/js/schemes/pisces.js"></script>
+
+
+<script src="/RayBlog/js/next-boot.js"></script>
+
+
+  <script defer src="/RayBlog/lib/three/three.min.js"></script>
+    <script defer src="/RayBlog/lib/three/three-waves.min.js"></script>
+    <script defer src="/RayBlog/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/RayBlog/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/RayBlog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: '#9FA2A2',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>

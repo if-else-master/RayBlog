@@ -1226,11 +1226,6 @@ pre .javascript .function {
   position: fixed;
   top: 0;
 }
-@media (max-width: 991px) {
-  .sidebar {
-    display: none;
-  }
-}
 .sidebar-inner {
   color: #999;
   padding: 18px 10px;
@@ -1284,7 +1279,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffe7db;
+  background: #c9a3b9;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1403,7 +1398,6 @@ pre .javascript .function {
   .sidebar-toggle {
     left: 20px;
     opacity: 0.8;
-    display: none;
   }
 }
 .sidebar-toggle:hover .toggle-line {
@@ -3120,21 +3114,6 @@ body:not(.darkmode-on) {
   box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
   transform: translateY(-1px);
 }
-.highlight {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
-}
-.highlight::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #6c757d, transparent);
-}
 .sidebar {
   background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,249,250,0.8) 100%);
   border: 1px solid rgba(0,0,0,0.05);
@@ -3186,14 +3165,6 @@ body:not(.darkmode-on) {
     border-color: #f8f9fa;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-  .highlight {
-    background: linear-gradient(135deg, #212529 0%, #343a40 100%);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
-  }
-  .highlight::before {
-    background: linear-gradient(90deg, transparent, #adb5bd, transparent);
   }
   .sidebar {
     background: linear-gradient(135deg, rgba(33,37,41,0.8) 0%, rgba(52,58,64,0.8) 100%);

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/RayBlog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/RayBlog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/RayBlog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/RayBlog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/RayBlog/css/main.css">
+
+
+<link rel="stylesheet" href="/RayBlog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"if-else-master.github.io","root":"/RayBlog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="資訊安全密室逃脫     團體專案    .image-gallery {   display: flex;   flex-wrap: wrap;   gap: 10px;   justify-content: center;   margin: 20px 0; } .image-gallery img {   width: 200px;   height: 150px;   object-fit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資訊安全密室逃脫">
+<meta property="og:url" content="https://if-else-master.github.io/RayBlog/2024/03/25/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/index.html">
+<meta property="og:site_name" content="Ray&#39;s Blog">
+<meta property="og:description" content="資訊安全密室逃脫     團體專案    .image-gallery {   display: flex;   flex-wrap: wrap;   gap: 10px;   justify-content: center;   margin: 20px 0; } .image-gallery img {   width: 200px;   height: 150px;   object-fit">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/tschool.png">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/file1.png">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/file2.png">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/cust2.png">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/new.jpeg">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/new2.jpeg">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/cust4.jpeg">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/my3.jpeg">
+<meta property="og:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/my4.jpeg">
+<meta property="article:published_time" content="2024-03-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-12T16:00:00.000Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="創作">
+<meta property="article:tag" content="教育">
+<meta property="article:tag" content="資訊安全">
+<meta property="article:tag" content="學習分享">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://if-else-master.github.io/RayBlog/img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/tschool.png">
+
+<link rel="canonical" href="https://if-else-master.github.io/RayBlog/2024/03/25/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>資訊安全密室逃脫 | Ray's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/RayBlog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ray's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I am Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/RayBlog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/RayBlog/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/RayBlog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/RayBlog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+  <a href="https://github.com/yourname" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://if-else-master.github.io/RayBlog/2024/03/25/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/RayBlog/images/RayMe.png">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ray's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          資訊安全密室逃脫
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-03-25 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-25T00:00:00+08:00">2024-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-07-13 00:00:00" itemprop="dateModified" datetime="2025-07-13T00:00:00+08:00">2025-07-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="資訊安全密室逃脫"><a href="#資訊安全密室逃脫" class="headerlink" title="資訊安全密室逃脫"></a>資訊安全密室逃脫</h1><div style="font-size: 0.9em; color: gray;">
+    團體專案
+</div>
+
+<style>
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+.image-gallery img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+@media (max-width: 768px) {
+  .image-gallery img {
+    width: 45%;
+    height: 120px;
+  }
+}
+@media (max-width: 480px) {
+  .image-gallery img {
+    width: 100%;
+    height: 200px;
+  }
+}
+</style>
+
+<h2 id="📋-前言"><a href="#📋-前言" class="headerlink" title="📋 前言"></a>📋 前言</h2><p>第二屆的第一次科技進階課以資安相關內容為主。在我們數位實驗高中，每年冬天都有舉辦學習分享會的傳統，每堂課都會準備展覽內容。課程討論時，我想到可以結合資安與創客元素設計一個密室逃脫。經過與老師討論，我們決定這學期的學習分享會將以密室逃脫作為展覽主題。</p>
+<span id="more"></span>
+
+<h2 id="企劃起源"><a href="#企劃起源" class="headerlink" title="企劃起源"></a>企劃起源</h2><p>第二屆的第一次科技進階課以資安相關內容為主。在我們數位實驗高中，每年冬天都有舉辦學習分享會的傳統，每堂課都會準備展覽內容。課程討論時，我想到可以結合資安與創客元素設計一個密室逃脫。經過與老師討論，我們決定這學期的學習分享會將以密室逃脫作為展覽主題。<br><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/tschool.png" alt="圖片說明"></p>
+<h2 id="規劃過程"><a href="#規劃過程" class="headerlink" title="規劃過程"></a>規劃過程</h2><p>在確定密室逃脫的主題故事之前，我們決定先體驗一次解謎式的密室逃脫。我們選擇了一款名為「消失的實驗室」的密室逃脫進行體驗。過程中，我們不僅深入思考如何設計謎題，還探討了故事與謎題的結合方式，為後續創作提供靈感。</p>
+<p>我們最後的規劃是這樣：討論逃脫主題(必須跟資安相關)、分工、製作解謎道具、布置逃脫空間。</p>
+<p>最後我們的主題是：消失的時間機器之資安密室逃脫。</p>
+<h2 id="分工"><a href="#分工" class="headerlink" title="分工"></a>分工</h2><p>我的工作主要聚焦在故事組的道具卡牌、劇情梳理、與資安的連結、布景，以及道具組的web架設、IOT的連接。最主要是當故事組與道具組之間溝通的橋樑。<br><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/file1.png" alt="1.png"></p>
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/file2.png" alt="2.png"></p>
+<h2 id="遇到的困難"><a href="#遇到的困難" class="headerlink" title="遇到的困難"></a>遇到的困難</h2><p>我們故事組遇到的困難主要是不知道怎麼相謎題融入到故事中，我們的故事跟謎題完全是分離的，那經過老師的修正以及ChatGPT的幫助，我們終於完成劇本以及道具文件。</p>
+<p>那對於我來說我還遇到了另一個困難，在跟謎題組的溝通中我們發現道具組無法玩全滿足我們故事組的要求，那因為我不是道具組的組員，所以我無法準確的知道他們的進度，於是我在故事組的部分完善後加入了道具組，這樣可以直接製作故事裡需要的道具以及可以更方便的跟道具組溝通。我在道具組主要負責樹莓派跟所有道具的連接，像是故事組設計了一把金鑰，插下這把金鑰後時間機器才能夠啟動，那麼道具組就要把它做出來，但他們來不及做出來，所以我拿過來自己做，我利用樹莓派裡得Python判斷金鑰的序號，如果金鑰的號碼正確那就啟讓所有的燈條亮起來。那這個部分做完後整個密室逃脫的就做完了。</p>
+<h2 id="作品成果"><a href="#作品成果" class="headerlink" title="作品成果"></a>作品成果</h2><p>學習分享會兩天的時間我們總共了接待20組，那我們也利用空閒的時間改進我們在接待時發現的問題，例如：玩家在閱讀故事文件時很難發現其中的提示，於是我們把提示改的明顯一點，那我們也有聽到反饋說這個密室逃脫一點都不恐怖，於是我們將冷氣調低到19度並播放恐怖音樂，那麼以下照片就是我們在接待時所拍攝的</p>
+<div class="image-gallery">
+
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/cust2.png" alt="密室逃脫活動現場"></p>
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/new.jpeg" alt="密室逃脫活動現場"></p>
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/new2.jpeg" alt="密室逃脫活動現場"></p>
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/cust4.jpeg" alt="密室逃脫活動現場"></p>
+</div>
+
+<h2 id="策展逐字稿"><a href="#策展逐字稿" class="headerlink" title="策展逐字稿"></a>策展逐字稿</h2><p>開場前情提要：<br>歡迎大家來玩科技進階密室逃脫，在這次的遊戲中你們扮演的是一群失憶的科學家收到神秘郵件來到這裡，我作為NPC在這裡能給的提示是：請詳細閱讀每一分文件以及越不合理的解法有可能就是正解</p>
+<p>遊戲後解說：<br>在第一關我們想要表達的是密碼不應該直接貼在螢幕上，即便他已經是加密過的摩斯密碼但仍然不應該這樣紀錄，另外如果有網頁或資安相關專業的應該會下意識打開F12查HTML，這時候你就會發現這個網頁的密碼驗證是寫在前端，那這在製作網站時也是不應該出現的寫法。我們破解網頁後就可以發現這邊有一份文件，那這個文件裡有寫說：「保險箱的密碼好像是文件日期」，而我們查看文件日期是2&#x2F;13，那麼我們在根據附圖的小地圖就可以發現保險箱的存在，將保險箱的密碼轉到213就可以破解。那像這樣將密碼保存在電子郵件的方式是不恰當的，很容易被發現。<br>那我們閱讀第二關中的文件可以發現，裡面寫說：「某次大停電保險箱突然打開，不知道有沒有被修復」，那這段文字是想要讓玩家嘗試將電源拔掉，在資訊安全中，駭客可能會透過讓伺服器斷電在重啟的方式竊取資料。那打開保險箱後我們可以發現密碼盤的線是完全沒有接東西的。<br>透過第三關的文件我們可以了解到許多科學家的指紋都被竊取下來了，而這些指紋就散落在保險箱附近，那我們從中找出跟保險箱上指紋相同的磁扣放上去後就能打開保險箱。那這個關卡主要是想要傳達不要將指紋上傳到網路上，會有很多個資上的問題。<br>在第四關的文件中我們了解到有一個工程師設計了一個電流急急棒保險箱，但鐵絲跟電線的地方似乎沒接好，那這句話其實是希望各位將保險箱上的電線和鐵絲分離，然後將鐵絲直接套到終點然後再接電，這樣就可以直接將保險箱打開。<br>那透過第五關的文件我們可以發現我們已經來到最終關卡了，文件寫說修復時間機器的方法就是將所有零件組裝上並插上正確的鑰匙，那我們透過接線圖上的提示將線接好後插上正確的鑰匙後時間機器就修好了。<br>以上就是整個密室逃脫的解說，謝謝大家</p>
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/my3.jpeg" alt="圖片說明"></p>
+<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>透過這一次特別的非個人專案，我對於分工合作又更熟悉了，在最後的策展中我們刻意弱化了故事的比重，除非有玩家問，否則我們不會刻意去解釋故事在講什麼，這麼做的原因是因為我們想要讓玩家了解更多的資安知識，那我覺得這樣比較符合這門的的主題。其實我們是在策展前一天才做完，當下的我很緊張，那我們也是在這樣到緊張中將密室逃脫做出來了，我覺得這是一次非常特別專案，那未來一定也會有更多類似的專案，總之我很期待。</p>
+<p><img src="/RayBlog/./img/%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB/my4.jpeg" alt="圖片說明"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/RayBlog/tags/%E5%89%B5%E4%BD%9C/" rel="tag"># 創作</a>
+              <a href="/RayBlog/tags/%E6%95%99%E8%82%B2/" rel="tag"># 教育</a>
+              <a href="/RayBlog/tags/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/" rel="tag"># 資訊安全</a>
+              <a href="/RayBlog/tags/%E5%AD%B8%E7%BF%92%E5%88%86%E4%BA%AB/" rel="tag"># 學習分享</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/RayBlog/2024/03/20/XR%E5%AF%A6%E5%A2%83%E6%95%99%E8%82%B2%E5%89%B5%E6%84%8F%E5%A4%A7%E8%B3%9E%E7%AB%B6%E8%B3%BD/" rel="prev" title="XR實境教育創意大賞競賽">
+      <i class="fa fa-chevron-left"></i> XR實境教育創意大賞競賽
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RayBlog/2024/07/09/%E7%AC%AC%E4%B9%9D%E5%B1%86%E6%B5%B7%E5%B3%BD%E5%85%A9%E5%B2%B8%E9%9D%92%E5%B0%91%E5%B9%B4%E5%89%B5%E5%AE%A2%E5%A4%A7%E8%B3%BD/" rel="next" title="第九屆海峽兩岸青少年創客大賽">
+      第九屆海峽兩岸青少年創客大賽 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E5%AF%86%E5%AE%A4%E9%80%83%E8%84%AB"><span class="nav-number">1.</span> <span class="nav-text">資訊安全密室逃脫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">📋 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%81%E5%8A%83%E8%B5%B7%E6%BA%90"><span class="nav-number">1.2.</span> <span class="nav-text">企劃起源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%8F%E5%8A%83%E9%81%8E%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">規劃過程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B7%A5"><span class="nav-number">1.4.</span> <span class="nav-text">分工</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%9B%B0%E9%9B%A3"><span class="nav-number">1.5.</span> <span class="nav-text">遇到的困難</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E5%93%81%E6%88%90%E6%9E%9C"><span class="nav-number">1.6.</span> <span class="nav-text">作品成果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E5%B1%95%E9%80%90%E5%AD%97%E7%A8%BF"><span class="nav-number">1.7.</span> <span class="nav-text">策展逐字稿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%83%E5%BE%97"><span class="nav-number">1.8.</span> <span class="nav-text">心得</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/RayBlog/images/RayMe.png">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/RayBlog/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/RayBlog/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/if-else-master" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;if-else-master" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/RayBlog/rayc57429@gmail.com" title="E-Mail → rayc57429@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rayc57429/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rayc57429&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div><script>
+// 動態 Canvas Nest 動畫，支持深色模式切換
+(function() {
+  // 檢測當前主題模式
+  function getCurrentTheme() {
+    return document.body.classList.contains('darkmode-on') ? 'dark' : 'light';
+  }
+  
+  // 根據主題設定顏色
+  function getCanvasColor() {
+    return getCurrentTheme() === 'dark' ? '255,255,255' : '0,0,255';
+  }
+  
+  // 載入 Canvas Nest
+  function loadCanvasNest() {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js';
+    script.setAttribute('color', getCanvasColor());
+    script.setAttribute('opacity', '0.5');
+    script.setAttribute('zIndex', '-1');
+    script.setAttribute('count', '99');
+    document.head.appendChild(script);
+  }
+  
+  // 監聽深色模式切換
+  function observeThemeChange() {
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          // 當檢測到深色模式切換時，重新載入動畫
+          const canvases = document.querySelectorAll('canvas');
+          canvases.forEach(canvas => {
+            if (canvas.style.position === 'fixed') {
+              canvas.remove();
+            }
+          });
+          
+          // 延遲重新載入以確保平滑過渡
+          setTimeout(() => {
+            loadCanvasNest();
+          }, 300);
+        }
+      });
+    });
+    
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+  
+  // 初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCanvasNest();
+      observeThemeChange();
+    });
+  } else {
+    loadCanvasNest();
+    observeThemeChange();
+  }
+})();
+</script> 
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/RayBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/RayBlog/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/RayBlog/lib/anime.min.js"></script>
+  <script src="/RayBlog/lib/velocity/velocity.min.js"></script>
+  <script src="/RayBlog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/RayBlog/js/utils.js"></script>
+
+<script src="/RayBlog/js/motion.js"></script>
+
+
+<script src="/RayBlog/js/schemes/pisces.js"></script>
+
+
+<script src="/RayBlog/js/next-boot.js"></script>
+
+
+  <script defer src="/RayBlog/lib/three/three.min.js"></script>
+    <script defer src="/RayBlog/lib/three/three-waves.min.js"></script>
+    <script defer src="/RayBlog/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/RayBlog/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/RayBlog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: '#9FA2A2',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>

@@ -1226,6 +1226,11 @@ pre .javascript .function {
   position: fixed;
   top: 0;
 }
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+}
 .sidebar-inner {
   color: #999;
   padding: 18px 10px;
@@ -1279,7 +1284,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #73dd0f;
+  background: #ffe7db;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1398,6 +1403,7 @@ pre .javascript .function {
   .sidebar-toggle {
     left: 20px;
     opacity: 0.8;
+    display: none;
   }
 }
 .sidebar-toggle:hover .toggle-line {
@@ -3076,137 +3082,6 @@ body:not(.darkmode-on) {
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   transition: color 0.3s ease;
 }
-.footer {
-  color: #000 !important;
-  font-weight: 500;
-}
-.footer a {
-  color: #000 !important;
-  border-bottom-color: #000 !important;
-}
-.footer a:hover {
-  color: #333 !important;
-  border-bottom-color: #333 !important;
-}
-.footer-inner {
-  color: #000 !important;
-}
-.footer-inner .powered-by,
-.footer-inner .theme-info,
-.footer-inner .with-love {
-  color: #000 !important;
-}
-@media (max-width: 767px) {
-  .darkmode-toggle,
-  .darkmode-layer,
-  [class*="darkmode"],
-  .dark-mode-toggle,
-  .theme-toggle,
-  .mode-toggle {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-  .sidebar-toggle {
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
-    bottom: auto !important;
-    background: rgba(0,0,0,0.7) !important;
-    border-radius: 6px !important;
-    padding: 8px !important;
-    width: 20px !important;
-    height: 20px !important;
-    z-index: 9999 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-  }
-  .sidebar-toggle .toggle-line {
-    background: #fff !important;
-    width: 20px !important;
-    height: 2px !important;
-  }
-  .sidebar-toggle .toggle-line:not(:first-child) {
-    margin-top: 4px !important;
-  }
-  .sidebar-toggle:hover {
-    background: rgba(0,0,0,0.9) !important;
-    transform: scale(1.05);
-  }
-  .sidebar {
-    display: block !important;
-    background: rgba(0,0,0,0.95) !important;
-    z-index: 9998 !important;
-  }
-  .sidebar.sidebar-active {
-    transform: translateX(0) !important;
-  }
-  .sidebar:not(.sidebar-active) {
-    transform: translateX(-100%) !important;
-  }
-  .sidebar-inner {
-    padding: 60px 20px 20px 20px !important;
-    color: #fff !important;
-  }
-  .sidebar-inner .site-author-image {
-    border: 3px solid #fff !important;
-  }
-  .sidebar-inner .site-author-name {
-    color: #fff !important;
-  }
-  .sidebar-inner .site-description {
-    color: #ccc !important;
-  }
-  .sidebar-inner .site-state-item .site-state-item-count {
-    color: #fff !important;
-  }
-  .sidebar-inner .site-state-item .site-state-item-name {
-    color: #ccc !important;
-  }
-  .sidebar-inner .links-of-author-item a {
-    color: #fff !important;
-    border-bottom-color: #fff !important;
-  }
-  .sidebar-inner .links-of-author-item a:hover {
-    color: #ccc !important;
-    border-bottom-color: #ccc !important;
-  }
-  .sidebar-nav li {
-    color: #fff !important;
-  }
-  .sidebar-nav li.sidebar-nav-active {
-    background: rgba(255,255,255,0.1) !important;
-    border-radius: 4px !important;
-  }
-  .sidebar-nav li:hover {
-    background: rgba(255,255,255,0.05) !important;
-    border-radius: 4px !important;
-  }
-  .post-toc .nav .nav-item .nav-link {
-    color: #fff !important;
-  }
-  .post-toc .nav .nav-item .nav-link:hover {
-    color: #ccc !important;
-  }
-  .post-toc .nav .nav-item .nav-link.active {
-    color: #00d4ff !important;
-    border-left: 2px solid #00d4ff !important;
-  }
-  #sidebar-dimmer {
-    background: rgba(0,0,0,0.5) !important;
-  }
-}
-@media (max-width: 991px) and (min-width: 768px) {
-  .sidebar-toggle {
-    position: fixed !important;
-    top: 20px !important;
-    left: 20px !important;
-    bottom: auto !important;
-    background: rgba(0,0,0,0.6) !important;
-    border-radius: 8px !important;
-    padding: 10px !important;
-    z-index: 9999 !important;
-  }
-}
 .pagination .page-number,
 .pagination .prev,
 .pagination .next {
@@ -3245,6 +3120,21 @@ body:not(.darkmode-on) {
   box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
   transform: translateY(-1px);
 }
+.highlight {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #6c757d, transparent);
+}
 .sidebar {
   background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,249,250,0.8) 100%);
   border: 1px solid rgba(0,0,0,0.05);
@@ -3262,25 +3152,6 @@ body:not(.darkmode-on) {
   .page-post-detail .post-title {
     color: #f8f9fa;
     text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  }
-  .footer {
-    color: #fff !important;
-  }
-  .footer a {
-    color: #fff !important;
-    border-bottom-color: #fff !important;
-  }
-  .footer a:hover {
-    color: #ccc !important;
-    border-bottom-color: #ccc !important;
-  }
-  .footer-inner {
-    color: #fff !important;
-  }
-  .footer-inner .powered-by,
-  .footer-inner .theme-info,
-  .footer-inner .with-love {
-    color: #fff !important;
   }
   .pagination .page-number,
   .pagination .prev,
@@ -3315,6 +3186,14 @@ body:not(.darkmode-on) {
     border-color: #f8f9fa;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .highlight {
+    background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .highlight::before {
+    background: linear-gradient(90deg, transparent, #adb5bd, transparent);
   }
   .sidebar {
     background: linear-gradient(135deg, rgba(33,37,41,0.8) 0%, rgba(52,58,64,0.8) 100%);

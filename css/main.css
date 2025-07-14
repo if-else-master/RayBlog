@@ -1279,7 +1279,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff6cdf;
+  background: #b99809;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -3126,6 +3126,112 @@ body:not(.darkmode-on) {
 }
 .tag-cloud:hover::before {
   opacity: 0.2;
+}
+.tag-cloud a {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 10px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 10px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 12px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 12px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 14px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 14px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 16px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 16px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 18px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 18px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 20px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 20px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 22px"],
+.tag-cloud a[style*="font-size: 24px"],
+.tag-cloud a[style*="font-size: 26px"] {
+  color: #fff !important;
+}
+.tag-cloud a[style*="font-size: 22px"]:hover,
+.tag-cloud a[style*="font-size: 24px"]:hover,
+.tag-cloud a[style*="font-size: 26px"]:hover {
+  color: #fff !important;
+}
+.tag-cloud a:hover {
+  color: #fff !important;
+}
+@media (prefers-color-scheme: dark) {
+  .tag-cloud a {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 10px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 10px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 12px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 12px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 14px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 14px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 16px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 16px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 18px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 18px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 20px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 20px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 22px"],
+  .tag-cloud a[style*="font-size: 24px"],
+  .tag-cloud a[style*="font-size: 26px"] {
+    color: #fff !important;
+  }
+  .tag-cloud a[style*="font-size: 22px"]:hover,
+  .tag-cloud a[style*="font-size: 24px"]:hover,
+  .tag-cloud a[style*="font-size: 26px"]:hover {
+    color: #fff !important;
+  }
+  .tag-cloud a:hover {
+    color: #fff !important;
+  }
 }
 @media (prefers-color-scheme: dark) {
   .page-post-detail .post-title {

@@ -1279,7 +1279,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #fa06d4;
+  background: #fff996;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1428,7 +1428,7 @@ pre .javascript .function {
   white-space: nowrap;
 }
 .post-toc .nav .nav-child {
-  display: block;
+  display: none;
 }
 .post-toc .nav .active > .nav-child {
   display: block;
@@ -3128,7 +3128,6 @@ body:not(.darkmode-on) {
   background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,249,250,0.8) 100%);
   border: 1px solid rgba(0,0,0,0.05);
   border-radius: 8px;
-  backdrop-filter: blur(10px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .tag-cloud::after {
